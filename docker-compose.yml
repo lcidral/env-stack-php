@@ -1,0 +1,65 @@
+version: '3'
+services:
+  reverse-proxy:
+    image: traefik
+    command: --api --docker
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  api:
+    image: nginx:1.13.3-alpine
+    restart: always
+    depends_on:
+      - php
+    volumes:
+      - ./build/conf/nginx/conf/api.conf:/etc/nginx/conf.d/api.conf:rw
+      - ./build/conf/nginx/logs:/var/log/nginx
+    labels:
+      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_API}"
+
+  php:
+    image: lcidral/php:7.2.4-fpm-xdebug-alpine
+    restart: always
+    depends_on:
+      - reverse-proxy
+    volumes:
+      - ~/.composer/cache:/root/.composer/cache
+      - ../engie-orcamento-api/:/var/www/html
+      - ./build/conf/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    environment:
+      DB_DRIVER: '${DB_DRIVER}'
+      DB_HOST: '${DB_HOST}'
+      DB_USERNAME: '${DB_USERNAME}'
+      DB_PASSWORD: '${DB_PASSWORD}'
+      DB_NAME: '${DB_NAME}'
+      DB_PORT: '${DB_PORT}'
+      PIPEDRIVE_TOKEN: '${PIPEDRIVE_TOKEN}'
+      GOOGLE_MAPS_KEY: '${GOOGLE_MAPS_KEY}'
+      AWS_KEY: '${AWS_KEY}'
+      AWS_SECRET: '${AWS_SECRET}'
+      ZEND_ENVIRONMENT: '${ZEND_ENVIRONMENT}'
+
+  web:
+    image: lcidral/portal.dev:php-7.1.8-apache
+    volumes:
+      - ../engie-orcamento-web:/var/www/html/:rw
+    labels:
+      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB}"
+
+  mariadb:
+    image: mariadb:10.1.26
+#    volumes:
+#      - "/tmp/.mysql-data:/var/lib/mysql"
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    environment:
+      VIRTUAL_HOST: '${DB_HOST}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+    labels:
+      - "traefik.frontend.rule=Host:${DB_HOST}"
