@@ -21,6 +21,7 @@ See ``environment.config`` and files in directory ``./conf/*``.
 
 ## Docker commands with Makefile
 
+```
 make build
 make push
 make release
@@ -33,6 +34,7 @@ make mail
 make install
 make database
 make migrate
+```
 
 ## Tests
 
