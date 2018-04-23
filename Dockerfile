@@ -73,16 +73,6 @@ RUN apk --no-cache add --virtual .build-deps \
     #apk del .build-deps && \
     rm -r /tmp/pear/*
 
-# Install Composer
-ONBUILD ARG GITHUB_OAUTH_TOKEN
-
-ONBUILD RUN set -xe \
-    && curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer \
-    && composer config -g github-oauth.github.com $GITHUB_OAUTH_TOKEN \
-    && composer global require "fxp/composer-asset-plugin" \
-    && composer global require "hirak/prestissimo"
-
 WORKDIR /var/www/html/
 
 EXPOSE 80
