@@ -21,7 +21,7 @@ See ``environment.config`` and files in directory ``./conf/*``.
 
 ## Docker commands with Makefile
 
-```
+```bash
 make build
 make push
 make release
@@ -44,15 +44,19 @@ make migrate
 - value
 
 ### Running Units Tests with PHPUnit
+```bash
 bin/phpunit
+```
 
 ### Running Api Tests with Codeception
+```bash
 bin/codecept run
+```
 
 ## How to use PHPStorm with Tasks Servers
 - clearly given tasks with user stories
 
 ### How to test Mail with Mailcatcher
-``bash
+```bash
 php -r 'mail("test@example.com","Testing php -v ".phpversion(),"php on ".gethostname());'
-``
+```
