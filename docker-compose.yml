@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 services:
   reverse-proxy:
     image: traefik
@@ -15,8 +15,8 @@ services:
     depends_on:
       - php
     volumes:
-      - ./build/conf/nginx/conf/api.conf:/etc/nginx/conf.d/api.conf:rw
-      - ./build/conf/nginx/logs:/var/log/nginx
+      - ./conf/nginx/api.conf:/etc/nginx/conf.d/api.conf:rw
+      - ./logs:/var/log/nginx
     labels:
       - "traefik.frontend.rule=Host:${VIRTUAL_HOST_API}"
 
@@ -27,32 +27,15 @@ services:
       - reverse-proxy
     volumes:
       - ~/.composer/cache:/root/.composer/cache
-      - ../engie-orcamento-api/:/var/www/html
-      - ./build/conf/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-    environment:
-      DB_DRIVER: '${DB_DRIVER}'
-      DB_HOST: '${DB_HOST}'
-      DB_USERNAME: '${DB_USERNAME}'
-      DB_PASSWORD: '${DB_PASSWORD}'
-      DB_NAME: '${DB_NAME}'
-      DB_PORT: '${DB_PORT}'
-      PIPEDRIVE_TOKEN: '${PIPEDRIVE_TOKEN}'
-      GOOGLE_MAPS_KEY: '${GOOGLE_MAPS_KEY}'
-      AWS_KEY: '${AWS_KEY}'
-      AWS_SECRET: '${AWS_SECRET}'
-      ZEND_ENVIRONMENT: '${ZEND_ENVIRONMENT}'
-
-  web:
-    image: lcidral/portal.dev:php-7.1.8-apache
-    volumes:
-      - ../engie-orcamento-web:/var/www/html/:rw
-    labels:
-      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB}"
+      - ./:/var/www/html
+      - ./conf/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./conf/php/docker-php-ext-sendmail.ini:/usr/local/etc/php/conf.d/docker-php-ext-sendmail.ini
+      - ./conf/php/ssmtp.conf:/etc/ssmtp/ssmtp.conf
+    env_file:
+      - ./conf/docker/environment.config
 
   mariadb:
     image: mariadb:10.1.26
-#    volumes:
-#      - "/tmp/.mysql-data:/var/lib/mysql"
     ports:
       - "3306:3306"
     expose:
@@ -61,5 +44,9 @@ services:
       VIRTUAL_HOST: '${DB_HOST}'
       MYSQL_USER: '${DB_USERNAME}'
       MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-    labels:
-      - "traefik.frontend.rule=Host:${DB_HOST}"
+
+  mail:
+    image: lcidral/mailcatcher.dev:latest
+    ports:
+      - '1025:1025'
+      - '1080:1080'
