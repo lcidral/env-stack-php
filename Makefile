@@ -1,19 +1,45 @@
 NAME = lcidral/php
 VERSION = 7.2.4-fpm-xdebug-alpine
 
-.PHONY: all build push tag_latest release
+.PHONY: all build push latest release
 
 all: build
 
-docker-build:
-	@docker build -t $(NAME):$(VERSION) .
+build:
+	docker build -t $(NAME):$(VERSION) .
 
-docker-push:
-	@docker push $(NAME):$(VERSION)
+push:
+	docker push $(NAME):$(VERSION)
 
-docker-release: tag_latest
-	@if ! docker images $(NAME) | awk '{ print $$2 }' | grep -q -F $(VERSION); then echo "$(NAME) version $(VERSION) is not yet built. Please run 'make docker-build'"; false; fi
-	@docker push $(NAME)
+release: latest
+	@if ! docker images $(NAME) | awk '{ print $$2 }' | grep -q -F $(VERSION); then echo "$(NAME) version $(VERSION) is not yet built. Please run 'make build'"; false; fi
+	docker push $(NAME)
 
-docker-tag_latest:
-	@docker tag -f $(NAME):$(VERSION) $(NAME):latest
+latest:
+	docker tag -f $(NAME):$(VERSION) $(NAME):latest
+
+swarm:
+	docker swarm init
+
+stack:
+	docker stack deploy -c docker-compose.yml developstack
+
+service:
+	docker service ls
+
+test:
+	@bin/phpunit
+	@bin/codecept run
+
+mail:
+	@php -r 'mail("test@example.com","Testing php -v ".phpversion(),"php on ".gethostname());'
+	@echo 'To see your fake inbox mail, open: http://mail:1080'
+
+install:
+	@composer install
+
+database:
+	@docker exec -i /phpdevelopstackwithdocker_mariadb_1 /usr/bin/mysql -u root --password=admin --execute="DROP SCHEMA IF EXISTS developstack; CREATE DATABASE developstack"
+
+migrate:
+	@docker exec -i /phpdevelopstackwithdocker_php_1 /var/www/html/bin/phinx --configuration=/var/www/html/phinx.yml migrate -e development -vvv
