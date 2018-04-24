@@ -18,3 +18,10 @@ paths:
 settings:
     shuffle: false
     lint: true
+
+env:
+    docker:
+         modules:
+            config:
+                REST:
+                    url: 'http://phpdevstackapi_api_1'

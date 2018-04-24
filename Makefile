@@ -31,6 +31,9 @@ test:
 	@bin/phpunit
 	@bin/codecept run
 
+docker-tests:
+	@docker exec -it /phpdevstackapi_php_1 bin/codecept run api --env docker
+
 mail:
 	@php -r 'mail("test@example.com","Testing php -v ".phpversion(),"php on ".gethostname());'
 	@echo 'To see your fake inbox mail, open: http://mail:1080'
