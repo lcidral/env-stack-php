@@ -1,0 +1,27 @@
+# Editors
+*.sublime-*
+.idea
+
+
+# Third-Party
+/vendor
+/bin
+/logs
+
+
+# System Files
+.DS_Store
+Thumbs.db
+
+
+# Temporary Files
+/var/**/*.*
+
+
+#
+# Legacy Stuff
+#
+
+
+# Include directories with .gitkeep
+!.gitkeep
