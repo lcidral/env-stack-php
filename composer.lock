@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "579ee6b08e52bad58a11e8a417d8301d",
+    "content-hash": "f8a401094e4fdb8479bde69bc5b40edd",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -2306,12 +2306,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "99d77487b58d70937d469cde6d43f04b07aa57ef"
+                "reference": "52187754b0eed0b8159f62a6fa30073327e8c2ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/99d77487b58d70937d469cde6d43f04b07aa57ef",
-                "reference": "99d77487b58d70937d469cde6d43f04b07aa57ef",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/52187754b0eed0b8159f62a6fa30073327e8c2ca",
+                "reference": "52187754b0eed0b8159f62a6fa30073327e8c2ca",
                 "shasum": ""
             },
             "require": {
@@ -2361,7 +2361,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-04-17T12:51:32+00:00"
+            "time": "2018-04-29T14:59:09+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3669,7 +3669,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "codeception/codeception": 20
+        "codeception/codeception": 20,
+        "phpunit/php-code-coverage": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

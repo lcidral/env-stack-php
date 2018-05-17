@@ -1,5 +1,7 @@
 NAME = lcidral/php
 VERSION = 7.2.4-fpm-xdebug-alpine
+PHP_CONTAINER_NAME = php-devstack-api_php_1
+MARIADB_CONTAINER_NAME = php-devstack-api_mariadb_1
 
 .PHONY: all build push latest release
 
@@ -32,21 +34,21 @@ test:
 	@bin/codecept run
 
 docker-tests:
-	@docker exec -it /phpdevstackapi_php_1 bin/codecept run api --env docker
+	@docker exec -it /$(PHP_CONTAINER_NAME) bin/codecept run api --env docker
 
 mail:
 	@php -r 'mail("test@example.com","Testing php -v ".phpversion(),"php on ".gethostname());'
 	@echo 'To see your fake inbox mail, open: http://mail:1080'
 
 install:
-	@docker exec -i /phpdevstackapi_php_1 curl -sS https://getcomposer.org/installer | php
-	@docker exec -i /phpdevstackapi_php_1 mv composer.phar /usr/local/bin/composer
-	@docker exec -i /phpdevstackapi_php_1 composer global require "fxp/composer-asset-plugin"
-	@docker exec -i /phpdevstackapi_php_1 composer global require "hirak/prestissimo"
-	@docker exec -i /phpdevstackapi_php_1 composer install
+	@docker exec -i /$(PHP_CONTAINER_NAME) curl -sS https://getcomposer.org/installer | php
+	@docker exec -i /$(PHP_CONTAINER_NAME) mv composer.phar /usr/local/bin/composer
+	@docker exec -i /$(PHP_CONTAINER_NAME) composer global require "fxp/composer-asset-plugin"
+	@docker exec -i /$(PHP_CONTAINER_NAME) composer global require "hirak/prestissimo"
+	@docker exec -i /$(PHP_CONTAINER_NAME) composer install
 
 database:
-	@docker exec -i /phpdevstackapi_mariadb_1 /usr/bin/mysql -u root --password=admin --execute="DROP SCHEMA IF EXISTS developstack; CREATE DATABASE developstack"
+	@docker exec -i /$(MARIADB_CONTAINER_NAME) /usr/bin/mysql -u root --password=admin --execute="DROP SCHEMA IF EXISTS developstack; CREATE DATABASE developstack"
 
 migrate:
-	@docker exec -i /phpdevstackapi_php_1 /var/www/html/bin/phinx --configuration=/var/www/html/phinx.yml migrate -e development -vvv
+	@docker exec -i /$(PHP_CONTAINER_NAME) /var/www/html/bin/phinx --configuration=/var/www/html/phinx.yml migrate -e development -vvv
