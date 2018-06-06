@@ -3,6 +3,7 @@
 .idea
 build/
 tests/_output/*
+c3.php
 
 # Third-Party
 /vendor
