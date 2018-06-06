@@ -48,7 +48,7 @@ install:
 	@docker exec -i /$(PHP_CONTAINER_NAME) composer install
 
 database:
-	@docker exec -i /$(MARIADB_CONTAINER_NAME) /usr/bin/mysql -u root --password=admin --execute="DROP SCHEMA IF EXISTS developstack; CREATE DATABASE developstack"
+	@docker exec -i /$(MARIADB_CONTAINER_NAME) /usr/bin/mysql -u root --password=$(MARIADB_USERNAME) --execute="DROP SCHEMA IF EXISTS developstack; CREATE DATABASE developstack"
 
 migrate:
 	@docker exec -i /$(PHP_CONTAINER_NAME) /var/www/html/bin/phinx --configuration=/var/www/html/phinx.yml migrate -e development -vvv

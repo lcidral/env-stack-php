@@ -20,6 +20,17 @@ services:
     labels:
       - "traefik.frontend.rule=Host:${VIRTUAL_HOST_API}"
 
+  web:
+    image: nginx:1.13.3-alpine
+    restart: always
+    depends_on:
+      - php
+    volumes:
+      - ./conf/nginx/web.conf:/etc/nginx/conf.d/api.conf:rw
+      - ./logs:/var/log/nginx
+    labels:
+      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB}"
+
   php:
     image: lcidral/php:7.2.4-fpm-xdebug-alpine
     restart: always
@@ -50,3 +61,33 @@ services:
     ports:
       - '1025:1025'
       - '1080:1080'
+
+  selenium-hub:
+    image: selenium/hub:3.12.0-boron
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chrome-debug:3.12.0-boron
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+    ports:
+        - 5900:5900
+    volumes:
+        - /dev/shm:/dev/shm
+
+  firefox:
+    image: selenium/node-firefox-debug:3.12.0-boron
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+    ports:
+        - 5901:5900
+    volumes:
+        - /dev/shm:/dev/shm

@@ -4,7 +4,12 @@ Work in progress...
 
 ## First: configure local hosts to:
 ```
-127.0.0.1       api.developatack.local
+127.0.0.1		api.developstack.local
+127.0.0.1		web.developstack.local
+127.0.0.1		db.developstack.local
+127.0.0.1		selenium-hub
+127.0.0.1		chrome
+127.0.0.1		firefox
 ```
 
 
@@ -60,3 +65,9 @@ bin/codecept run
 ```bash
 php -r 'mail("test@example.com","Testing php -v ".phpversion(),"php on ".gethostname());'
 ```
+
+## Debuging in VNC
+Use a VNC client, then connect to port:
+
+Chrome: 5900
+Firefox: 5901

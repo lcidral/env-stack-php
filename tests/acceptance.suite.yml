@@ -1,0 +1,17 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+actor: AcceptanceTester
+modules:
+    enabled:
+        - \Helper\Acceptance
+        - WebDriver:
+            url: http://php-devstack-api_web_1
+            browser: chrome
+            restart: true
+        - MailCatcher:
+            url: 'http://mail'
+            port: '1080'

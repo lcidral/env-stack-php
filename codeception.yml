@@ -1,24 +1,31 @@
-# suite config
-suites:
-    api:
-        actor: ApiTester
-        path: .
-        modules:
-            enabled:
-                - REST:
-                    url: http://api.developstack.local
-                    depends: PhpBrowser
-
 paths:
     tests: tests
     output: tests/_output
     data: tests/_data
     support: tests/_support
-
+    envs: tests/_envs
+actor_suffix: Tester
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
 settings:
     shuffle: false
     lint: true
 
+coverage:
+    enabled: true
+    remote: true
+    c3_url: 'http://web.developstack.local/'
+    whitelist:
+        include:
+            - src/*
+#        exclude:
+#            - src/cache/*
+#    blacklist:
+#        include:
+#            - app/controllers/*
+#        exclude:
+#            - app/cache/CacheProvider.php
 env:
     docker:
          modules:

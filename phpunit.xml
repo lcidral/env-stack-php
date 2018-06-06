@@ -18,7 +18,7 @@
 
 	<testsuites>
 		<testsuite name="Test Suite">
-			<directory>./tests/phpunit</directory>
+			<directory>./tests/unit</directory>
 		</testsuite>
 	</testsuites>
     <filter>

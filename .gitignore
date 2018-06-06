@@ -1,7 +1,8 @@
 # Editors
 *.sublime-*
 .idea
-
+build/
+tests/_output/*
 
 # Third-Party
 /vendor

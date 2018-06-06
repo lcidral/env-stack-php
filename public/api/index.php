@@ -9,21 +9,24 @@ if (PHP_SAPI == 'cli-server') {
     }
 }
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
+
+define('C3_CODECOVERAGE_ERROR_LOG_FILE', '/logs/c3_error.log'); //Optional (if not set the default c3 output dir will be used)
+include __DIR__ . '/../../c3.php';
 
 // Instantiate the app
-$settings = require __DIR__ . '/../conf/slim/settings.php';
+$settings = require __DIR__ . '/../../conf/slim/settings.php';
 $app = new \Slim\App($settings);
 
 // Set up dependencies
 // DIC configuration
-require __DIR__ . '/../conf/slim/dependencies.php';
+require __DIR__ . '/../../conf/slim/dependencies.php';
 
 // Register middleware
-require __DIR__ . '/../conf/slim/middleware.php';
+require __DIR__ . '/../../conf/slim/middleware.php';
 
 // Register routes
-require __DIR__ . '/../conf/slim/routes.php';
+require __DIR__ . '/../../conf/slim/routes.php';
 
 // Run app
 $app->run();
