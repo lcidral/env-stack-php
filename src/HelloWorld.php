@@ -24,7 +24,8 @@ class HelloWorld
         return $this->world;
     }
 
-    public function getHelloWorld() {
-        return $this->hello.' '.$this->world;
+    public function getHelloWorld()
+    {
+        return $this->hello . ' ' . $this->world;
     }
 }

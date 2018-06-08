@@ -31,4 +31,4 @@ env:
          modules:
             config:
                 REST:
-                    url: 'http://phpdevstackapi_api_1'
+                    url: 'http://php-devstack-api_api_1'
