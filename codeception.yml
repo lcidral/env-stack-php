@@ -32,3 +32,23 @@ env:
             config:
                 REST:
                     url: 'http://php-devstack-api_api_1'
+                WebDriver:
+                    url: 'http://php-devstack-api_web_1'
+                    browser: chrome
+
+    headless:
+        modules:
+            config:
+              WebDriver:
+                url: 'http://php-devstack-api_api'
+                browser: chrome
+                window_size: false
+                capabilities:
+                  chromeOptions:
+                      args: ["--headless", "--disable-gpu"]
+    local:
+        modules:
+            config:
+              WebDriver:
+                url: 'http://php-devstack-api_api'
+                browser: chrome

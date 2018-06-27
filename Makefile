@@ -52,3 +52,6 @@ database:
 
 migrate:
 	@docker exec -i /$(PHP_CONTAINER_NAME) /var/www/html/bin/phinx --configuration=/var/www/html/phinx.yml migrate -e development -vvv
+
+headless:
+	@java -Dwebdriver.chrome.driver=~/Downloads/chromedriver -jar ~/Downloads/selenium-server-standalone-3.12.0.jar

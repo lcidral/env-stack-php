@@ -45,6 +45,28 @@ services:
     env_file:
       - ./conf/docker/environment.config
 
+  php56:
+    image: php:5.6-fpm-alpine
+    restart: always
+    depends_on:
+      - reverse-proxy
+    volumes:
+      - ~/.composer/cache:/root/.composer/cache
+      - ./:/var/www/html
+    env_file:
+      - ./conf/docker/environment.config
+
+  web56:
+    image: nginx:1.13.3-alpine
+    restart: always
+    depends_on:
+    - php56
+    volumes:
+    - ./conf/nginx/web.conf:/etc/nginx/conf.d/web56.conf:rw
+    - ./logs:/var/log/nginx
+    labels:
+    - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB56}"
+
   mariadb:
     image: mariadb:10.1.26
     ports:

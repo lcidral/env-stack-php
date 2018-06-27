@@ -15,3 +15,8 @@ modules:
         - MailCatcher:
             url: 'http://mail'
             port: '1080'
+
+#gherkin:
+#  contexts:
+#    default:
+#      - "Step\\Acceptance\\InformarUmCepForaDoEstadoDeGoias"
