@@ -46,13 +46,15 @@ services:
       - ./conf/docker/environment.config
 
   php56:
-    image: php:5.6-fpm-alpine
+    image: php:5.6-fpm
+    working_dir: "/var/www"
     restart: always
     depends_on:
       - reverse-proxy
     volumes:
       - ~/.composer/cache:/root/.composer/cache
-      - ./:/var/www/html
+      - ./public/web56:/var/www
+      - ./conf/php/php56.ini:/usr/local/etc/php/conf.d/php.ini:ro
     env_file:
       - ./conf/docker/environment.config
 
@@ -60,12 +62,12 @@ services:
     image: nginx:1.13.3-alpine
     restart: always
     depends_on:
-    - php56
+      - php56
     volumes:
-    - ./conf/nginx/web.conf:/etc/nginx/conf.d/web56.conf:rw
-    - ./logs:/var/log/nginx
+      - ./conf/nginx/web56.conf:/etc/nginx/conf.d/web.conf:rw
+      - ./logs:/var/log/nginx
     labels:
-    - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB56}"
+      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB56}"
 
   mariadb:
     image: mariadb:10.1.26
