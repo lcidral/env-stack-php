@@ -9,29 +9,29 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
-  api:
+  api72:
     image: nginx:1.13.3-alpine
     restart: always
     depends_on:
-      - php
+      - php72
     volumes:
-      - ./conf/nginx/api.conf:/etc/nginx/conf.d/api.conf:rw
+      - ./conf/nginx/api72.conf:/etc/nginx/conf.d/api.conf:rw
       - ./logs:/var/log/nginx
     labels:
-      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_API}"
+      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_API72}"
 
-  web:
+  web72:
     image: nginx:1.13.3-alpine
     restart: always
     depends_on:
-      - php
+      - php72
     volumes:
-      - ./conf/nginx/web.conf:/etc/nginx/conf.d/api.conf:rw
+      - ./conf/nginx/web72.conf:/etc/nginx/conf.d/api.conf:rw
       - ./logs:/var/log/nginx
     labels:
-      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB}"
+      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB72}"
 
-  php:
+  php72:
     image: lcidral/php:7.2.6-fpm-xdebug-alpine
     restart: always
     depends_on:
@@ -39,9 +39,9 @@ services:
     volumes:
       - ~/.composer/cache:/root/.composer/cache
       - ./:/var/www/html
-      - ./conf/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-      - ./conf/php/docker-php-ext-sendmail.ini:/usr/local/etc/php/conf.d/docker-php-ext-sendmail.ini
-      - ./conf/php/ssmtp.conf:/etc/ssmtp/ssmtp.conf
+      - ./conf/php/7.2/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./conf/php/7.2/docker-php-ext-sendmail.ini:/usr/local/etc/php/conf.d/docker-php-ext-sendmail.ini
+      - ./conf/php/7.2/ssmtp.conf:/etc/ssmtp/ssmtp.conf
     env_file:
       - ./conf/docker/environment.config
 
@@ -53,8 +53,8 @@ services:
       - reverse-proxy
     volumes:
       - ~/.composer/cache:/root/.composer/cache
-      - ./public/web56:/var/www
-      - ./conf/php/php56.ini:/usr/local/etc/php/conf.d/php.ini:ro
+      - ./:/var/www
+      - ./conf/php/5.6/php.ini:/usr/local/etc/php/conf.d/php.ini:ro
     env_file:
       - ./conf/docker/environment.config
 
@@ -68,6 +68,18 @@ services:
       - ./logs:/var/log/nginx
     labels:
       - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB56}"
+
+  api56:
+    image: nginx:1.13.3-alpine
+    restart: always
+    depends_on:
+    - php56
+    volumes:
+    - ./conf/nginx/api56.conf:/etc/nginx/conf.d/web.conf:rw
+    - ./logs:/var/log/nginx
+    - ./public/api56:/var/www
+    labels:
+    - "traefik.frontend.rule=Host:${VIRTUAL_HOST_API56}"
 
   mariadb:
     image: mariadb:10.1.26

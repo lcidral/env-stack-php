@@ -11,7 +11,7 @@ class HelloWorld
     /**
      * @return string
      */
-    public function getHello(): string
+    public function getHello()
     {
         return $this->hello;
     }
@@ -19,7 +19,7 @@ class HelloWorld
     /**
      * @return string
      */
-    public function getWorld(): string
+    public function getWorld()
     {
         return $this->world;
     }

@@ -4,14 +4,15 @@ Work in progress...
 
 ## First: configure local hosts to:
 ```
-127.0.0.1		api.developstack.local
-127.0.0.1		web.developstack.local
+127.0.0.1		api72.developstack.local
+127.0.0.1		api56.developstack.local
+127.0.0.1		web72.developstack.local
+127.0.0.1		web56.developstack.local
 127.0.0.1		db.developstack.local
 127.0.0.1		selenium-hub
 127.0.0.1		chrome
 127.0.0.1		firefox
 ```
-
 
 ## After run
 - install composer dependencies
