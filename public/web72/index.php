@@ -6,4 +6,6 @@ include __DIR__ . '/../../c3.php';
 
 echo "Hello World";
 
-phpinfo();
+// Same set of parameters, passed using an URI string:
+$client = new Predis\Client('tcp://redis:6379');
+$client->set('foo', 'helllowwww');

@@ -3,9 +3,14 @@ $app->get('/', function (\Slim\Http\Request $request, \Slim\Http\Response $respo
 
     $hello = (new \lcidral\developstack\HelloWorld())->getHello();
     $world = (new \lcidral\developstack\HelloWorld())->getWorld();
+
+    $client = new Predis\Client('tcp://redis:6379');
+    $redis_value = $client->get('foo');
+
     $result = [
         'hello' => $hello,
-        'world' => $world
+        'world' => $world,
+        'redis_value' => $redis_value
     ];
 
     $this->logger->info("pass '/' route");
