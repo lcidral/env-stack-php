@@ -9,7 +9,7 @@ modules:
     enabled:
         - \Helper\Acceptance
         - WebDriver:
-            url: http://php-devstack-api_web_1
+            url: http://php-devstack-api_web72_1
             browser: chrome
             restart: true
         - MailCatcher:

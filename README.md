@@ -12,6 +12,7 @@ Work in progress...
 127.0.0.1		selenium-hub
 127.0.0.1		chrome
 127.0.0.1		firefox
+127.0.0.1		mail
 ```
 
 ## After run

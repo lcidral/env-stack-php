@@ -15,7 +15,7 @@ settings:
 coverage:
     enabled: true
     remote: true
-    c3_url: 'http://web.developstack.local/'
+    c3_url: 'http://web72.developstack.local/'
     whitelist:
         include:
             - src/*
@@ -31,18 +31,28 @@ env:
          modules:
             config:
                 REST:
-                    url: 'http://php-devstack-api_api_1'
+                    url: 'http://php-devstack-api_api72_1'
                 WebDriver:
-                    url: 'http://php-devstack-api_web_1'
                     browser: chrome
+                    host: selenium-hub
+
+    docker-local:
+         modules:
+            config:
+                REST:
+                    url: 'http://api72.developstack.local/'
+                WebDriver:
+                    browser: chrome
+                    host: selenium-hub
 
     headless:
         modules:
             config:
               WebDriver:
-                url: 'http://php-devstack-api_api'
+                url: 'http://php-devstack-api_php72_1'
                 browser: chrome
                 window_size: false
+                host: selenium-hub
                 capabilities:
                   chromeOptions:
                       args: ["--headless", "--disable-gpu"]
@@ -50,5 +60,5 @@ env:
         modules:
             config:
               WebDriver:
-                url: 'http://php-devstack-api_api'
+                url: 'http://php-devstack-api72_api'
                 browser: chrome

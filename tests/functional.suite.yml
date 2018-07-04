@@ -11,6 +11,6 @@ modules:
         # add a framework module here
         - \Helper\Functional
         - WebDriver:
-            url: http://php-devstack-api_web_1
+            url: http://php-devstack-api_web72_1
             browser: chrome
             restart: true
