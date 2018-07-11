@@ -71,5 +71,5 @@ php -r 'mail("test@example.com","Testing php -v ".phpversion(),"php on ".gethost
 ## Debuging in VNC
 Use a VNC client, then connect to port:
 
-Chrome: 5900
-Firefox: 5901
+Chrome: 5900  
+Firefox: 5901  
