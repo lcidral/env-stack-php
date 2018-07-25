@@ -10,6 +10,8 @@ c3.php
 /bin
 /logs
 
+# Storage
+/storage/*
 
 # System Files
 .DS_Store
@@ -23,7 +25,6 @@ Thumbs.db
 #
 # Legacy Stuff
 #
-
 
 # Include directories with .gitkeep
 !.gitkeep
