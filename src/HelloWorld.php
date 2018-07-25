@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace lcidral\developstack;
 
 
@@ -27,5 +29,9 @@ class HelloWorld
     public function getHelloWorld()
     {
         return $this->hello . ' ' . $this->world;
+    }
+
+    protected function getWackos() {
+        return 'Wackos';
     }
 }
