@@ -13,7 +13,7 @@ class ApiTest extends BaseTestCase
         $helloWorld = (new HelloWorld())->getHelloWorld();
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertContains('{"hello":"Hello","world":"World"}', (string)$response->getBody());
+        $this->assertContains('{"hello":"Hello","world":"World","redis_value":"helllowwww"}', (string)$response->getBody());
         $this->assertNotContains($helloWorld, (string)$response->getBody());
     }
 
