@@ -73,13 +73,13 @@ services:
     image: nginx:1.13.3-alpine
     restart: always
     depends_on:
-    - php56
+      - php56
     volumes:
-    - ./conf/nginx/api56.conf:/etc/nginx/conf.d/web.conf:rw
-    - ./logs:/var/log/nginx
-    - ./public/api56:/var/www
+      - ./conf/nginx/api56.conf:/etc/nginx/conf.d/web.conf:rw
+      - ./logs:/var/log/nginx
+      - ./public/api56:/var/www
     labels:
-    - "traefik.frontend.rule=Host:${VIRTUAL_HOST_API56}"
+      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_API56}"
 
   mariadb:
     image: mariadb:10.1.26
@@ -87,6 +87,8 @@ services:
       - "3306:3306"
     expose:
       - "3306"
+    volumes:
+      - './storage/mariadb:/var/lib/mysql'
     environment:
       VIRTUAL_HOST: '${DB_HOST}'
       MYSQL_USER: '${DB_USERNAME}'
@@ -96,6 +98,8 @@ services:
     image: redis
     ports:
       - "6379"
+    volumes:
+      - './storage/redis:/data'
 
   mail:
     image: lcidral/mailcatcher.dev:latest
@@ -117,9 +121,9 @@ services:
       - HUB_HOST=selenium-hub
       - HUB_PORT=4444
     ports:
-        - 5900:5900
+      - 5900:5900
     volumes:
-        - /dev/shm:/dev/shm
+      - /dev/shm:/dev/shm
 
   firefox:
     image: selenium/node-firefox-debug:3.12.0-boron
@@ -129,6 +133,72 @@ services:
       - HUB_HOST=selenium-hub
       - HUB_PORT=4444
     ports:
-        - 5901:5900
+      - 5901:5900
     volumes:
-        - /dev/shm:/dev/shm
+      - /dev/shm:/dev/shm
+
+  mongo:
+    image: mongo:3.2
+    hostname: 'mongo'
+    volumes:
+      - ./storage/mongodb/data:/data/db
+      - ./storage/mongodb/dump:/dump
+    command: mongod --smallfiles --oplogSize 128 --replSet rs0
+    labels:
+      - "traefik.enable=false"
+    logging:
+      options:
+        max-size: 10m
+        max-file: '3'
+
+#  mongo-init-replica:
+#    image: mongo:3.2
+#    command: 'mongo mongo/rocketchat --eval "rs.initiate({ _id: ''rs0'', members: [ { _id: 0, host: ''localhost:27017'' } ]})"'
+#    depends_on:
+#      - mongo
+        
+  rocketchat:
+    image: rocket.chat:latest
+    hostname: 'rocketchat'
+    depends_on:
+      - mongo
+    volumes:
+      - ./storage/rocketchat/uploads:/app/uploads
+    environment:
+      - PORT=3000
+      - ROOT_URL=http://localhost:3000
+      - MONGO_URL=mongodb://mongo:27017/rocketchat
+      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
+    links:
+      - mongo:mongo
+    labels:
+      - "traefik.backend=rocketchat"
+      - "traefik.frontend.rule=Host:im.developstack.local"
+    ports:
+      - 3000:3000
+
+#  hubot:
+#    image: rocketchat/hubot-rocketchat:latest
+#    hostname: "hubot"
+#    depends_on:
+#      - rocketchat
+#    environment:
+#      - ROCKETCHAT_URL=rocketchat:3000
+#      - ROCKETCHAT_ROOM=general
+#      - ROCKETCHAT_USER=rocket.cat
+#      - ROCKETCHAT_PASSWORD=12345
+#      - ROCKETCHAT_AUTH=password
+#      - BOT_NAME=Rocket.Cat
+#      - LISTEN_ON_ALL_PUBLIC=true
+#      - EXTERNAL_SCRIPTS=hubot-help,hubot-seen,hubot-links,hubot-diagnostics,hubot-rocketchat-gitlab
+#      - GITLAB_URL=https://gitlab.com/api/v3/
+#      - GITLAB_TOKEN=
+#      - GITLAB_RECORD_LIMIT=1000
+#    links:
+#      - rocketchat:rocketchat
+#    volumes:
+#      - ./storage/hubot/scripts:/home/hubot/scripts
+#    ports:
+#      - 3001:3001
+#    labels:
+#      - "traefik.enable=false"
