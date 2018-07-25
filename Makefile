@@ -37,7 +37,7 @@ docker-tests:
 	@docker exec -it /$(PHP_CONTAINER_NAME) bin/codecept run --env docker
 
 mail:
-	@php -r 'mail("test@example.com","Testing php -v ".phpversion(),"php on ".gethostname());'
+	@docker exec -it /$(PHP_CONTAINER_NAME) php -r 'mail("test@example.com","Testing php -v ".phpversion(),"php on ".gethostname());'
 	@echo 'To see your fake inbox mail, open: http://mail:1080'
 
 install:
