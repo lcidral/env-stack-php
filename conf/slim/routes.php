@@ -1,4 +1,9 @@
 <?php
+
+use BotMan\BotMan\BotMan;
+use BotMan\BotMan\BotManFactory;
+use BotMan\BotMan\Drivers\DriverManager;
+
 $app->get('/', function (\Slim\Http\Request $request, \Slim\Http\Response $response, array $args) {
 
     $hello = (new \lcidral\developstack\HelloWorld())->getHello();
@@ -38,4 +43,29 @@ $app->post('/mail', function ($request, $response)
     $this->logger->info("pass '/mail' route");
 
     return $response->withJson($result);
+});
+
+$app->post('/rocket', function ($request, $response)
+{
+
+    $parsedBody = $request->getParsedBody();
+
+    $debug = print_r($parsedBody['text'], 1);
+
+    mail("test@example.com","Testing php -v ".phpversion(),$debug);
+
+    $config = [
+        // Your driver-specific configuration
+        "rocketchat" => [
+            //"incomingEndpoint" => getenv('ROCKET_CHAT_INCOMING_ENDPOINT'),
+            "token" => getenv('ROCKET_CHAT_TOKEN')
+        ]
+    ];
+
+    print_r($config);
+
+    DriverManager::loadDriver(\FilippoToso\BotMan\Drivers\RocketChat\RocketChatDriver::class);
+    BotManFactory::create($config);
+    $botman = BotManFactory::create($config);
+    $botman->say('Message', 'eumgPqfsBxJt76MD9');
 });
