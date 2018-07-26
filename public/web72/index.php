@@ -9,3 +9,7 @@ echo "Hello World";
 // Same set of parameters, passed using an URI string:
 $client = new Predis\Client('tcp://redis:6379');
 $client->set('foo', 'helllowwww');
+
+?>
+
+<img src="/img/saochico.png">
