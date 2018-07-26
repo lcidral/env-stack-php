@@ -1,6 +1,10 @@
-# php-devstack-api
+# qa-dev-stack-php
 
-Work in progress...
+WIP: draft project
+
+## Requirements
+- docker
+- execute docker login command in host machine
 
 ## First: configure local hosts to:
 ```
@@ -24,28 +28,30 @@ See ``environment.config`` and files in directory ``./conf/*``.
 ## How to use this sample project with PHPStorm
 - execute http requests
 - execute phpunit tests
-- execute codeception rest api tests
+- execute codeception tests
 
 ## Docker commands with Makefile
 
 ```bash
-make build
-make push
-make release
-make latest
-make swarm
-make start
-make service
-make test
-make mail
-make install
-make database
-make migrate
+make build ....... Build a new docker image, see Dockerfile.
+make push ........ Push image to your docker hub account
+make release ..... TODO
+make latest ...... TODO
+make swarm ....... TODO
+make start ....... TODO
+make service ..... TODO
+make test ........ Execute tests in docker containers
+make mail ........ Send an test email to Mailcatcher Inbox
+make install ..... Install composer dependencies
+make database .... Create a new database in MariaDB container
+make migrate ..... Run Phinx migration command
 ```
 
-## Tests
+## Automated Test Suites
+- PHPUnit
+- Codeception
 
-### How to test a feature with BDD
+### How to test a feature using BDD, Codeception and PHPStorm
 - persona
 - action
 - value
@@ -60,16 +66,19 @@ bin/phpunit
 bin/codecept run
 ```
 
+### Running Tests with Docker Exec
+- see docker exec command in `Makefile:docker-tests`
+
 ## How to use PHPStorm with Tasks Servers
 - clearly given tasks with user stories
 
-### How to test Mail with Mailcatcher
-```bash
-php -r 'mail("test@example.com","Testing php -v ".phpversion(),"php on ".gethostname());'
-```
 
-## Debuging in VNC
-Use a VNC client, then connect to port:
+## See acceptance tests with VNC
 
-Chrome: 5900  
-Firefox: 5901  
+Use VNC client to connect.
+
+Browser | Port
+--------|-------
+Chrome  | 5900
+Firefox | 5901
+
