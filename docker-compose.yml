@@ -39,6 +39,7 @@ services:
     volumes:
       - ~/.composer/cache:/root/.composer/cache
       - ./:/var/www/html
+      - ./public/images:/var/www/html/public/images
       - ./conf/php/7.2/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - ./conf/php/7.2/docker-php-ext-sendmail.ini:/usr/local/etc/php/conf.d/docker-php-ext-sendmail.ini
       - ./conf/php/7.2/ssmtp.conf:/etc/ssmtp/ssmtp.conf
