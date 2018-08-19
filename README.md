@@ -1,22 +1,24 @@
-# qa-dev-stack-php
+# env-stack-php
 
-WIP: draft project
+WIP: this is a experiment project
 
 ## Requirements
 - docker
 - execute docker login command in host machine
 
-## First: configure local hosts to:
+## Virtual Hosts
 ```
-127.0.0.1		api72.developstack.local
-127.0.0.1		api56.developstack.local
-127.0.0.1		web72.developstack.local
-127.0.0.1		web56.developstack.local
-127.0.0.1		db.developstack.local
-127.0.0.1		selenium-hub
+127.0.0.1		mail
 127.0.0.1		chrome
 127.0.0.1		firefox
-127.0.0.1		mail
+127.0.0.1		selenium-hub
+127.0.0.1		db.stack.local
+127.0.0.1		im.stack.local
+127.0.0.1		api56.stack.local
+127.0.0.1		api72.stack.local
+127.0.0.1		web56.stack.local
+127.0.0.1		web72.stack.local
+127.0.0.1		chatbot.stack.local
 ```
 
 ## After run
