@@ -1,0 +1,8 @@
+GET http://chatbot.stack.local/
+Content-Type: application/json
+
+{
+    "content" : "test email content"
+}
+
+###
