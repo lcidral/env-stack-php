@@ -97,17 +97,17 @@ $app->post('/rocket', function ($request, $response)
 
     $commands = [];
     $commands['bot'] = [
-        'hora' => date('H:i:s'),
-        'data' => date('d/m/y'),
-        'ajuda' => ajuda(),
+        'time' => date('H:i:s'),
+        'date' => date('d/m/y'),
+        'help' => help(),
         'restart:memcache' => 'command to restart memcache',
         'restart:redis' => 'command to restart redis',
         'restart:supervisor' => 'command to restart supervisor',
         'build:app' => 'command to build app',
         'status:supervisor' => 'command to show status from supervisor',
-        'test:acceptance:api' => 'command to run acceptance tests in API',
-        'test:functional:api' => 'command to run unit tests in API',
-        'test:unit:api' => 'command to run unit tests in API'
+        'run:acceptance:test' => 'command to run acceptance tests',
+        'run:functional:test' => 'command to run functional tests',
+        'run:unit:test' => 'command to run unit tests',
     ];
 
     $explode = explode( " ", $parsedBody['text'] );
@@ -130,7 +130,7 @@ $app->post('/rocket', function ($request, $response)
 
 });
 
-function ajuda() {
-    return "ops... nao existe ajuda aqui por enquanto.";
+function help() {
+    return "ouch... precisa de ajuda? não consigo te ajudar. #botfailed";
 
 }
