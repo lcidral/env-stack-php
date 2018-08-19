@@ -55,3 +55,21 @@ migrate:
 
 headless:
 	@java -Dwebdriver.chrome.driver=~/Downloads/chromedriver -jar ~/Downloads/selenium-server-standalone-3.12.0.jar
+
+up:
+	@docker-compose up -d
+
+clean:
+	@set -e
+	@clear && echo 'Removing ./vendor/'
+	@rm -rf ./vendor/
+	@echo 'Removing ./storage/*'
+	@rm -rf ./storage/*
+	@echo 'Removing ./logs/*'
+	@rm -rf ./logs/*
+	@echo 'Removing composer.lock'
+	@rm composer.lock
+	@echo $'\e[1;32m' [ OK ]
+
+down:
+	@docker-compose down
