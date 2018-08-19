@@ -53,21 +53,18 @@ $app->post('/rocket', function ($request, $response)
     $debug = [];
 
     $parsedBody = $request->getParsedBody();
-
     $debug['parseBody'] = $parsedBody;
 
     $auth = RocketChatAuth::getAuth(
         getenv('ROCKETCHAT_USERNAME'),
         getenv('ROCKETCHAT_PASSWORD'),
-        'http://php-devstack-api_rocketchat_1:3000'
+        'http://rocketchat:3000'
     );
-
-    $debug['auth'] = $auth;
 
     $config = [
         // Your driver-specific configuration
         "rocketchat" => [
-            "endpoint" => 'http://php-devstack-api_rocketchat_1:3000/hooks/Gj4nbNy4EnAKmCZhD/Hh3r6gBybb56jcACDHJfXfATcBHPath7xJupDkx3S775cp8u',
+            "endpoint" => 'http://rocketchat:3000/hooks/' . getenv('ROCKETCHAT_TOKEN'),
             "token" => getenv('ROCKETCHAT_OUTGOING_TOKEN')
         ],
         'user_id' =>  getenv('ROCKETCHAT_USER_ID'),
@@ -78,19 +75,62 @@ $app->post('/rocket', function ($request, $response)
         'matchingKeys' => [
             'user_id', 'user_name', 'channel_id', 'text', 'message_id', 'timestamp', 'bot',
         ],
-        //'auth' => $auth
+        'auth' => $auth
     ];
-
-    $debug['config'] = $config;
 
     DriverManager::loadDriver(\FilippoToso\BotMan\Drivers\RocketChat\RocketChatDriver::class);
     BotManFactory::create($config);
+
     $botman = BotManFactory::create($config);
-    $response = $botman->say('Hello user', getenv('ROCKETCHAT_USER_ID'), \FilippoToso\BotMan\Drivers\RocketChat\RocketChatDriver::class);
+
+    if ($parsedBody['text'] == 'bot help') {
+        $output = "
+        ```
+- bot help - mostra ajuda
+- bot hora - mostra hora
+- bot data - mostra data
+```
+        ";
+        $response = $botman->say($output, getenv('ROCKETCHAT_USER_ID'), \FilippoToso\BotMan\Drivers\RocketChat\RocketChatDriver::class);
+        $debug['response'] = $response;
+    }
+
+    $commands = [];
+    $commands['bot'] = [
+        'hora' => date('H:i:s'),
+        'data' => date('d/m/y'),
+        'ajuda' => ajuda(),
+        'restart:memcache' => 'command to restart memcache',
+        'restart:redis' => 'command to restart redis',
+        'restart:supervisor' => 'command to restart supervisor',
+        'build:app' => 'command to build app',
+        'status:supervisor' => 'command to show status from supervisor',
+        'test:acceptance:api' => 'command to run acceptance tests in API',
+        'test:functional:api' => 'command to run unit tests in API',
+        'test:unit:api' => 'command to run unit tests in API'
+    ];
+
+    $explode = explode( " ", $parsedBody['text'] );
+
+    $output = $commands[$explode[0]][$explode[1]];
+
+    $parameters = [
+        'username' => 'Bot User',
+        'icon_url' => 'https://cdn2.vectorstock.com/i/1000x1000/29/11/ice-mountain-icon-flat-style-vector-19372911.jpg',
+    ];
+
+    //$output = exec('cd / ; ls -la',$return_var);
+
+    $response = $botman->say($output, getenv('ROCKETCHAT_USER_ID'), \FilippoToso\BotMan\Drivers\RocketChat\RocketChatDriver::class, $parameters);
 
     $debug['botman'] = $botman;
     $debug['response'] = $response;
 
-    $debug = print_r($debug, 1);
-    mail("test@example.com","Testing php -v ".phpversion(),$debug);
+    mail("rocket@" . getenv('VIRTUAL_HOST_API72'),"Debug PHP: " . phpversion(), print_r( $debug, 1) );
+
 });
+
+function ajuda() {
+    return "ops... nao existe ajuda aqui por enquanto.";
+
+}
