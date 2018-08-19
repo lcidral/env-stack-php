@@ -27,7 +27,8 @@
     "ramsey/uuid": "3.7.3",
     "predis/predis": "^2.0@dev",
     "filippo-toso/driver-rocket-chat": "dev-master",
-    "botman/botman": "2.0.x-dev"
+    "botman/botman": "2.0.x-dev",
+    "botman/installer": "dev-master"
   },
   "autoload-dev": {
     "psr-4": {
