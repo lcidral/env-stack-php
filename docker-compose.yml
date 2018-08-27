@@ -34,13 +34,14 @@ services:
   www:
     image: nginx:1.13.3-alpine
     restart: always
+    hostname: "www"
     depends_on:
       - php
     volumes:
       - ./conf/nginx/www.conf:/etc/nginx/conf.d/www.conf:rw
       - ./logs:/var/log/nginx
     labels:
-      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB}"
+      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WWW}"
 
   php:
     image: lcidral/php:7.2.9-fpm-xdebug-alpine

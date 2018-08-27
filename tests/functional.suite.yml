@@ -11,6 +11,6 @@ modules:
         # add a framework module here
         - \Helper\Functional
         - WebDriver:
-            url: http://env-stack-php_www_1
             browser: chrome
             restart: true
+            url: http://www.stack.local/

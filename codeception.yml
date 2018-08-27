@@ -15,7 +15,7 @@ settings:
 coverage:
     enabled: true
     remote: true
-    c3_url: 'http://www.developstack.local/'
+    c3_url: 'http://www.stack.local/'
     whitelist:
         include:
             - src/*
@@ -31,7 +31,7 @@ env:
          modules:
             config:
                 REST:
-                    url: 'http://php-devstack-api_api_1'
+                    url: 'http://env-stack-php_api_1'
                 WebDriver:
                     browser: chrome
                     host: selenium-hub
@@ -40,7 +40,7 @@ env:
          modules:
             config:
                 REST:
-                    url: 'http://api.developstack.local/'
+                    url: 'http://api.stack.local/'
                 WebDriver:
                     browser: chrome
                     host: selenium-hub
@@ -49,7 +49,7 @@ env:
         modules:
             config:
               WebDriver:
-                url: 'http://php-devstack-api_php_1'
+                url: 'http://env-stack-php_api_1'
                 browser: chrome
                 window_size: false
                 host: selenium-hub
@@ -60,5 +60,5 @@ env:
         modules:
             config:
               WebDriver:
-                url: 'http://php-devstack-api_api'
+                url: 'http://env-stack-php_api_1'
                 browser: chrome

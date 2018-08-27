@@ -1,7 +1,7 @@
 NAME = lcidral/php
 VERSION = 7.2.9-fpm-xdebug-alpine
-PHP_CONTAINER_NAME = php-devstack-api_php_1
-MARIADB_CONTAINER_NAME = php-devstack-api_mariadb_1
+PHP_CONTAINER_NAME = env-stack-php_php_1
+MARIADB_CONTAINER_NAME = env-stack-php_mariadb_1
 
 .PHONY: all build push latest release
 
@@ -34,7 +34,7 @@ test:
 	@bin/codecept run
 
 docker-tests:
-	@docker exec -it /$(PHP_CONTAINER_NAME) bin/codecept run --env docker
+	@docker exec -it /$(PHP_CONTAINER_NAME) bin/codecept run --env docker -vvv --debug
 
 mail:
 	@docker exec -it /$(PHP_CONTAINER_NAME) php -r 'mail("test@example.com","Testing php -v ".phpversion(),"php on ".gethostname());'

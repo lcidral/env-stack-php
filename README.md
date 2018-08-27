@@ -12,7 +12,6 @@ WIP: this is a experiment project
 127.0.0.1		chrome
 127.0.0.1		firefox
 127.0.0.1		selenium-hub
-127.0.0.1		db.stack.local
 127.0.0.1		im.stack.local
 127.0.0.1		api.stack.local
 127.0.0.1		www.stack.local
@@ -21,9 +20,6 @@ WIP: this is a experiment project
 
 ## After run
 - install composer dependencies
-
-## Update config files
-See ``environment.config`` and files in directory ``./conf/*``.
 
 ## How to use this sample project with PHPStorm
 - execute http requests

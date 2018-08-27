@@ -11,13 +11,9 @@ $app->get('/', function (\Slim\Http\Request $request, \Slim\Http\Response $respo
     $hello = (new \lcidral\developstack\HelloWorld())->getHello();
     $world = (new \lcidral\developstack\HelloWorld())->getWorld();
 
-    $client = new Predis\Client('tcp://redis:6379');
-    $redis_value = $client->get('foo');
-
     $result = [
         'hello' => $hello,
-        'world' => $world,
-        'redis_value' => $redis_value
+        'world' => $world
     ];
 
     $this->logger->info("pass '/' route");
@@ -99,7 +95,6 @@ $app->post('/rocket', function ($request, $response)
     $commands['bot'] = [
         'time' => date('H:i:s'),
         'date' => date('d/m/y'),
-        'help' => help(),
         'restart:memcache' => 'command to restart memcache',
         'restart:redis' => 'command to restart redis',
         'restart:supervisor' => 'command to restart supervisor',
@@ -119,8 +114,6 @@ $app->post('/rocket', function ($request, $response)
         'icon_url' => 'https://cdn2.vectorstock.com/i/1000x1000/29/11/ice-mountain-icon-flat-style-vector-19372911.jpg',
     ];
 
-    //$output = exec('cd / ; ls -la',$return_var);
-
     $response = $botman->say($output, getenv('ROCKETCHAT_USER_ID'), \FilippoToso\BotMan\Drivers\RocketChat\RocketChatDriver::class, $parameters);
 
     $debug['botman'] = $botman;
@@ -129,8 +122,3 @@ $app->post('/rocket', function ($request, $response)
     mail("rocket@" . getenv('VIRTUAL_HOST_API72'),"Debug PHP: " . phpversion(), print_r( $debug, 1) );
 
 });
-
-function help() {
-    return "ouch... precisa de ajuda? não consigo te ajudar. #botfailed";
-
-}
