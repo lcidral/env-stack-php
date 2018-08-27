@@ -10,7 +10,4 @@ modules:
     enabled:
         # add a framework module here
         - \Helper\Functional
-        - WebDriver:
-            browser: chrome
-            restart: true
-            url: http://www.stack.local/
+error_level: "E_ALL & ~E_STRICT & ~E_DEPRECATED"
