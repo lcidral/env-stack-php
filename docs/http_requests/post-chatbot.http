@@ -1,4 +1,4 @@
-GET http://chatbot.stack.local/
+GET http://bot.stack.local/
 Content-Type: application/json
 
 {

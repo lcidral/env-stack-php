@@ -14,11 +14,9 @@ WIP: this is a experiment project
 127.0.0.1		selenium-hub
 127.0.0.1		db.stack.local
 127.0.0.1		im.stack.local
-127.0.0.1		api56.stack.local
-127.0.0.1		api72.stack.local
-127.0.0.1		web56.stack.local
-127.0.0.1		web72.stack.local
-127.0.0.1		chatbot.stack.local
+127.0.0.1		api.stack.local
+127.0.0.1		www.stack.local
+127.0.0.1		bot.stack.local
 ```
 
 ## After run

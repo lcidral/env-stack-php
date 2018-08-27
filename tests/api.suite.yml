@@ -3,5 +3,5 @@ modules:
     enabled:
         - \Helper\Api
         - REST:
-            url: http://api72.developstack.local
+            url: http://api.stack.local
             depends: PhpBrowser

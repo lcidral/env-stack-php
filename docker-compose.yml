@@ -9,40 +9,40 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
-  api72:
+  api:
     image: nginx:1.13.3-alpine
     restart: always
     depends_on:
-      - php72
+      - php
     volumes:
-      - ./conf/nginx/api72.conf:/etc/nginx/conf.d/api.conf:rw
+      - ./conf/nginx/api.conf:/etc/nginx/conf.d/api.conf:rw
       - ./logs:/var/log/nginx
     labels:
-      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_API72}"
+      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_API}"
 
   bot:
     image: nginx:1.13.3-alpine
     restart: always
     depends_on:
-      - php72
+      - php
     volumes:
-      - ./conf/nginx/chatbot.conf:/etc/nginx/conf.d/chatbot.conf:rw
+      - ./conf/nginx/bot.conf:/etc/nginx/conf.d/bot.conf:rw
       - ./logs:/var/log/nginx
     labels:
       - "traefik.frontend.rule=Host:${VIRTUAL_HOST_BOT}"
 
-  web72:
+  www:
     image: nginx:1.13.3-alpine
     restart: always
     depends_on:
-      - php72
+      - php
     volumes:
-      - ./conf/nginx/web72.conf:/etc/nginx/conf.d/api.conf:rw
+      - ./conf/nginx/www.conf:/etc/nginx/conf.d/www.conf:rw
       - ./logs:/var/log/nginx
     labels:
-      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB72}"
+      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB}"
 
-  php72:
+  php:
     image: lcidral/php:7.2.9-fpm-xdebug-alpine
     restart: always
     depends_on:
@@ -56,42 +56,6 @@ services:
       - ./conf/php/7.2/ssmtp.conf:/etc/ssmtp/ssmtp.conf
     env_file:
       - .env
-
-  php56:
-    image: php:5.6-fpm
-    working_dir: "/var/www"
-    restart: always
-    depends_on:
-      - reverse-proxy
-    volumes:
-      - ~/.composer/cache:/root/.composer/cache
-      - ./:/var/www
-      - ./conf/php/5.6/php.ini:/usr/local/etc/php/conf.d/php.ini:ro
-    env_file:
-      - .env
-
-  web56:
-    image: nginx:1.13.3-alpine
-    restart: always
-    depends_on:
-      - php56
-    volumes:
-      - ./conf/nginx/web56.conf:/etc/nginx/conf.d/web.conf:rw
-      - ./logs:/var/log/nginx
-    labels:
-      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB56}"
-
-  api56:
-    image: nginx:1.13.3-alpine
-    restart: always
-    depends_on:
-      - php56
-    volumes:
-      - ./conf/nginx/api56.conf:/etc/nginx/conf.d/web.conf:rw
-      - ./logs:/var/log/nginx
-      - ./public/api56:/var/www
-    labels:
-      - "traefik.frontend.rule=Host:${VIRTUAL_HOST_API56}"
 
   mariadb:
     image: mariadb:10.1.26

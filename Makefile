@@ -1,6 +1,6 @@
 NAME = lcidral/php
 VERSION = 7.2.9-fpm-xdebug-alpine
-PHP_CONTAINER_NAME = php-devstack-api_php72_1
+PHP_CONTAINER_NAME = php-devstack-api_php_1
 MARIADB_CONTAINER_NAME = php-devstack-api_mariadb_1
 
 .PHONY: all build push latest release

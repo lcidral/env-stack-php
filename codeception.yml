@@ -15,7 +15,7 @@ settings:
 coverage:
     enabled: true
     remote: true
-    c3_url: 'http://web72.developstack.local/'
+    c3_url: 'http://www.developstack.local/'
     whitelist:
         include:
             - src/*
@@ -31,7 +31,7 @@ env:
          modules:
             config:
                 REST:
-                    url: 'http://php-devstack-api_api72_1'
+                    url: 'http://php-devstack-api_api_1'
                 WebDriver:
                     browser: chrome
                     host: selenium-hub
@@ -40,7 +40,7 @@ env:
          modules:
             config:
                 REST:
-                    url: 'http://api72.developstack.local/'
+                    url: 'http://api.developstack.local/'
                 WebDriver:
                     browser: chrome
                     host: selenium-hub
@@ -49,7 +49,7 @@ env:
         modules:
             config:
               WebDriver:
-                url: 'http://php-devstack-api_php72_1'
+                url: 'http://php-devstack-api_php_1'
                 browser: chrome
                 window_size: false
                 host: selenium-hub
@@ -60,5 +60,5 @@ env:
         modules:
             config:
               WebDriver:
-                url: 'http://php-devstack-api72_api'
+                url: 'http://php-devstack-api_api'
                 browser: chrome
