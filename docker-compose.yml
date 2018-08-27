@@ -43,7 +43,7 @@ services:
       - "traefik.frontend.rule=Host:${VIRTUAL_HOST_WEB72}"
 
   php72:
-    image: lcidral/php:7.2.7-fpm-xdebug-alpine
+    image: lcidral/php:7.2.9-fpm-xdebug-alpine
     restart: always
     depends_on:
       - reverse-proxy
