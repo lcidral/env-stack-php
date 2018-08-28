@@ -29,13 +29,6 @@ WIP: this is a experiment project
 ## Docker commands with Makefile
 
 ```bash
-make build ....... Build a new docker image, see Dockerfile.
-make push ........ Push image to your docker hub account
-make release ..... TODO
-make latest ...... TODO
-make swarm ....... TODO
-make start ....... TODO
-make service ..... TODO
 make test ........ Execute tests in docker containers
 make mail ........ Send an test email to Mailcatcher Inbox
 make install ..... Install composer dependencies
