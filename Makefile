@@ -1,24 +1,9 @@
-NAME = lcidral/php
-VERSION = 7.2.9-fpm-xdebug-alpine
 PHP_CONTAINER_NAME = env-stack-php_php_1
 MARIADB_CONTAINER_NAME = env-stack-php_mariadb_1
 
 .PHONY: all build push latest release
 
 all: build
-
-build:
-	docker build -t $(NAME):$(VERSION) .
-
-push:
-	docker push $(NAME):$(VERSION)
-
-release: latest
-	@if ! docker images $(NAME) | awk '{ print $$2 }' | grep -q -F $(VERSION); then echo "$(NAME) version $(VERSION) is not yet built. Please run 'make build'"; false; fi
-	docker push $(NAME)
-
-latest:
-	docker tag -f $(NAME):$(VERSION) $(NAME):latest
 
 swarm:
 	docker swarm init
